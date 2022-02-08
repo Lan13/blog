@@ -1,0 +1,67 @@
+{% extends "blogs/base.html" %}
+
+{% block page_header %}
+  <h1 class="text-center">Blogs</h1>
+{% endblock page_header %}
+
+{% block content %}
+<!--此处开始-->
+<div class="container row">
+{% for blog in blogs %}
+    <div class="card mb-3 col-sm-6">
+      <h4 class="card-header">
+        <a href="{% url 'blogs:blog' blog.id %}"> {{ blog.title }}</a>
+          <span class="text-muted"><small>Author:
+              <a href="{% url 'blogs:homepage' blog.owner.id %}" style="color: gray">
+                  {{ blog.owner }}
+              </a>
+          </small></span>
+      </h4>
+      <div class="card-body">
+          <p class="card-text">{{ blog.text | safe }}</p>
+
+      </div>
+      <div class="card-footer text-muted">
+          <a href="{% url 'blogs:blog' blog.id %}" class="btn btn-primary">阅读本文</a>
+          <span><small>{{ blog.date_added|date:'M d, Y H:i' }}</small></span>
+      </div>
+    </div>
+{% endfor %}
+</div>
+<!--此处结束-->
+
+
+<div class="pagination row">
+    <div class="m-auto">
+        <span class="step-links">
+            {% if blogs.has_previous %}
+                <a href="?page=1" class="btn btn-success">
+                    &laquo; 1
+                </a>
+                <span>...</span>
+                <a href="?page={{ blogs.previous_page_number }}"
+                   class="btn btn-secondary"
+                >
+                    {{ blogs.previous_page_number }}
+                </a>
+            {% endif %}
+            <span class="current btn btn-danger btn-lg">
+                {{ blogs.number }}
+            </span>
+            {% if blogs.has_next %}
+                <a href="?page={{ blogs.next_page_number }}"
+                   class="btn btn-secondary"
+                >
+                    {{ blogs.next_page_number }}
+                </a>
+                <span>...</span>
+                <a href="?page={{ blogs.paginator.num_pages }}"
+                   class="btn btn-success"
+                >
+                    {{ blogs.paginator.num_pages }} &raquo;
+                </a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+{% endblock content %}

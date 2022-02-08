@@ -1,0 +1,12 @@
+{% extends "blogs/base.html" %}
+
+{% block content %}
+<div class="jumbotron">
+      <h1 class="display-3">Welcome to BlogPost.</h1>
+      <p class="lead">In BlogPost, you can share whatever you want to share!</p>
+      {% if not user.is_authenticated %}
+      <a class="btn btn-lg btn-primary" href="{% url 'users:register' %}" role="button">
+          Register</a>
+      {% endif %}
+</div>
+{% endblock content %}

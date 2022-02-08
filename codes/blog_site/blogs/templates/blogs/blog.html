@@ -1,0 +1,56 @@
+{% extends 'blogs/base.html' %}
+{% load bootstrap4 %}
+
+{% block page_header %}
+  <div class="text-center mb-2">
+    <h2> {{ blog.title }}</h2>
+    <small> Time: {{ blog.date_added }} -
+      Author: <a href="{% url 'blogs:homepage' blog.owner.id %}" style="color: pink">{{ blog.owner }}</a>
+      {% if auth %}
+        <a href="{% url 'blogs:edit_blog' blog.id %}">Edit text</a>
+      {% endif %}
+    </small>
+  </div>
+{% endblock page_header %}
+
+{% block content %}
+  <p>Text: {{ blog.text|safe }}</p>
+
+  {% if user.is_authenticated %}
+    <div class="text-center mb-2">
+      <form action="{% url 'blogs:blog' blog.id %}" method="post" class="form">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button name="submit" class="btn btn-primary">Post Comments</button>
+        <input type="hidden" name="next" value="{% url 'blogs:blog' blog.id %}">
+      </form>
+    </div>
+  {% else %}
+  <br>
+    <h5 class="row justify-content-center">
+      请<a href="{% url 'users:login' %}">登录</a>后回复
+    </h5>
+  <br>
+  {% endif %}
+
+<h4>共有{{ comments.count }}条评论</h4>
+<div>
+  {% for comment in comments %}
+  <hr>
+  <p>
+    <strong>
+      <a href="{% url 'blogs:homepage' comment.owner.id %}" style="color: pink"> {{ comment.owner }} </a>
+    </strong>于
+    <span style="color: green">
+      {{ comment.date_added | date:"Y-m-d H:i:s" }}
+    </span>时说:
+    {% if comment.owner == user %}
+    <span><small><a href="{% url 'comments:edit_comment' comment.id %}">edit comments</a></small></span>
+    {% endif %}
+  </p>
+  <pre style="font-family: inherit; font-size: 1em;white-space: pre-wrap;word-wrap: break-word;">
+    {{ comment.text | safe }}
+  </pre>
+  {% endfor %}
+</div>
+{% endblock content %}

@@ -1,0 +1,77 @@
+{% load bootstrap4 %}
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device=width, initial-sacle=1, shrink-to-fit=no">
+    <title>BlogSite</title>
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='fill' %}
+    <link rel="stylesheet" href="{% static 'monokai.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'md_css/monokai.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+    <link type="text/css" rel="stylesheet" href="static/code.css"/>
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border ">
+    <a class="navbar-brand" href="{% url 'blogs:index' %}">BlogPost</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarCollapse" aria-controls="navbarCollapse"
+            aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'blogs:blogs' %}">Blogs</a>
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'blogs:new_blog' %}">New blog</a>
+            </li>
+            {% endif %}
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
+                     Hello, {{ user.username }}.
+                 </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="{% url 'blogs:homepage' user.id %}">Personal Homepage</a>
+                <a class="dropdown-item" href="{% url 'users:profile_edit' user.id %}">Edit profile</a>
+                <a class="dropdown-item" href="{% url 'users:change_pwd' user.id %}">Change Password</a>
+                {% if user.is_superuser %}
+                    <a class="dropdown-item" href="/admin">Backend</a>
+                {% endif %}
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'users:logout' %}">Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'users:login' %}">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'users:register' %}">Register</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+<main role="main" class="container">
+        <div class="pb-2 mb-2 border-bottom">
+            {% block page_header %}{% endblock page_header %}
+        </div>
+        <div>
+            {% block content %}{% endblock content %}
+        </div>
+</main>
+
+</body>
+</html>
+

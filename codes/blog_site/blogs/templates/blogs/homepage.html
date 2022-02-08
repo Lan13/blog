@@ -1,0 +1,81 @@
+{% extends "blogs/base.html" %}
+{% load bootstrap4 %}
+
+{% block page_header %}
+<div class="col-sm-8">
+    <h1 class="text-center">{{ visit_user }}'s Blogs</h1>
+</div>
+{% endblock page_header %}
+
+{% block content %}
+<div class="container row">
+<div class="col-sm-8">
+{% for blog in blogs %}
+    <div class="card mb-3">
+      <h4 class="card-header">
+        <a href="{% url 'blogs:blog' blog.id %}"> {{ blog.title }}</a>
+      </h4>
+      <div class="card-body">
+          <p class="card-text">{{ blog.text | safe }}</p>
+      </div>
+      <div class="card-footer text-muted">
+          <a href="{% url 'blogs:blog' blog.id %}" class="btn btn-primary">阅读本文</a>
+          <span><small>{{ blog.date_added|date:'M d, Y H:i' }}</small></span>
+      </div>
+    </div>
+{% endfor %}
+</div>
+<div class="col-sm-4">
+    <div class="card mb-3">
+        {% if profile.avatar %}
+        <img src="{{ profile.avatar.url }}" style="border-radius: 15%;" width="80%" height="80%">
+        {% endif %}
+        <div class="card-body">
+            <p class="card-text">Mail: {{ profile.mail }}</p>
+            <p class="card-text">Bio: {{ profile.bio }}</p>
+        </div>
+        {% if user == visit_user %}
+        <div class="card-footer text-muted">
+            <a href="{% url 'users:profile_edit' user.id %}" class="btn btn-primary">Edit</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+</div>
+
+<div class="col-sm-8">
+<div class="pagination row">
+    <div class="m-auto">
+        <span class="step-links">
+            {% if blogs.has_previous %}
+                <a href="?page=1" class="btn btn-success">
+                    &laquo; 1
+                </a>
+                <span>...</span>
+                <a href="?page={{ blogs.previous_page_number }}"
+                   class="btn btn-secondary"
+                >
+                    {{ blogs.previous_page_number }}
+                </a>
+            {% endif %}
+            <span class="current btn btn-danger btn-lg">
+                {{ blogs.number }}
+            </span>
+            {% if blogs.has_next %}
+                <a href="?page={{ blogs.next_page_number }}"
+                   class="btn btn-secondary"
+                >
+                    {{ blogs.next_page_number }}
+                </a>
+                <span>...</span>
+                <a href="?page={{ blogs.paginator.num_pages }}"
+                   class="btn btn-success"
+                >
+                    {{ blogs.paginator.num_pages }} &raquo;
+                </a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+</div>
+{% endblock content %}
