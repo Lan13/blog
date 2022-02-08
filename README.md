@@ -43,3 +43,22 @@
 
 ## 功能展示
 
+首页为：<img src="images\welcome.png"/>
+
+用户注册界面：<img src="images\register.png"/>
+
+用户登录界面：<img src="images\login.png"/>
+
+用户登录之后：右上角会显示用户名<img src="images\index.png"/>
+
+全部博客：这里可以查看所有用户的所有博客<img src="images\blogs.png"/>
+
+查看博客：当用户已经登录时，可以在博客的下方评论<img src="images\blog.png"/>
+
+如果没有登录的话，会显示一个需要登录才能评论的信息：<img src="images\comment.png"/>
+
+个人主页：（实在不会布局QwQ）<img src="images\homepage.png"/>
+
+导航栏的下拉框：<img src="images\dropdown.png"/>
+
+（只有为超级用户时才有到django后台的链接）
