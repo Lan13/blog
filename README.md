@@ -3,6 +3,9 @@
 ## 环境要求
 
 - python 3.9.0
+- Pycharm Community 2021.1.3
+- mysql 8.0.26
+
 - Django 4.0.1
 - Markdown 3.3.6
 - Pillow 9.0.1
