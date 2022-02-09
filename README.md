@@ -47,6 +47,8 @@
 
 ## 功能展示
 
+NOTICE：建议克隆到本地查看效果
+
 首页为：<img src="images\welcome.png"/>
 
 用户注册界面：<img src="images\register.png"/>
