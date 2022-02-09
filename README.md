@@ -5,7 +5,6 @@
 - python 3.9.0
 - Pycharm Community 2021.1.3
 - mysql 8.0.26
-
 - Django 4.0.1
 - Markdown 3.3.6
 - Pillow 9.0.1
@@ -13,6 +12,7 @@
 - django-bootstrap4 21.2
 - django-imagekit 4.1.0
 - mysqlclient 2.1.0
+- django-simple-captcha 0.5.14
 
 ## 程序结构
 
