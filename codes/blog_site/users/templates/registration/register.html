@@ -5,9 +5,18 @@
 <form method="post" action="{% url 'users:register' %}" class="form">
     {% csrf_token %}
     {% bootstrap_form form %}
+    {% bootstrap_form captcha_form %}
     {% buttons %}
     <button name="submit" class="btn btn-primary">Register</button>
     {% endbuttons %}
     <input type="hidden" name="next" value="{% url 'blogs:index' %}">
 </form>
+<script>
+    $('.captcha').click(function () {
+    $.getJSON("/captcha/refresh/", function (result) {
+        $('.captcha').attr('src', result['image_url']);
+        $('#id_captcha_0').val(result['key'])
+    });
+});
+</script>
 {% endblock content %}

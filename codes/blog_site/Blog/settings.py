@@ -37,6 +37,7 @@ INSTALLED_APPS = [
 
     'bootstrap4',
     'imagekit',
+    'captcha',
 
     'django.contrib.admin',
     'django.contrib.auth',
